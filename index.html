@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice</title>
+    <link rel="stylesheet" href="css/myreset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="module" src="js/script.js"></script>
+</head>
+<body>
+    <input name="cells" type="number" min="0" max="81" value="35">
+    <span>Число заполненных ячеек</span>
+    <br>
+    <input name="k" type="number" min="0" max="9" value="2">
+    <span>Минимальное число цифр в строках и столбцах</span>
+    <br>
+    <button id="generate">Сгенерировать</button>
+    <p>Сложность: <span class="difficulty"></span></p>
+    <table id="sudoku" style="border-collapse: collapse; font-size: 1.8rem"></table>
+</body>
+</html>

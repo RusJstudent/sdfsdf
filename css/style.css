@@ -1,0 +1,11 @@
+.cell {
+    text-align: center;
+    height: 20px;
+    width: 20px;
+    border: 1px solid black;
+    padding: 3px 7px;
+}
+
+.edit {
+    color: blue;
+}
