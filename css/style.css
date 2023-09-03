@@ -7,6 +7,7 @@
     --page-background-color: #fafafa;
     --sudoku-color: #fff;
     --active-cell-color: #9ecfff;
+    --item-wrong-color: red;
 }
 
 html {
@@ -78,6 +79,10 @@ html {
 
 .sudoku__item.edit {
     color: var(--active-color);
+}
+
+.sudoku__item.wrong {
+    color: var(--item-wrong-color);
 }
 
 .sudoku__item:hover {

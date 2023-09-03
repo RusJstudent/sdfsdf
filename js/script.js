@@ -3,7 +3,7 @@ import {solveSudoku} from './solveSudoku.js';
 import {swap} from './swap.js';
 import {removeElems} from './removeElems.js';
 import {render} from './render.js';
-// import {validateSudoku, isValidNum} from './validate.js';
+import {validateSudoku, validateNum} from './validate.js';
 // import {estimateComplexity} from './estimateComplexity.js';
 
 const DIFFICULTIES = {
@@ -28,16 +28,20 @@ const erase = document.querySelector('.tools__erase');
 const edit = document.querySelector('.tools__edit');
 const numbers = document.querySelector('.numbers');
 
+let board;
 let activeCell = null;
+let isEditing = false;
 
 generateSudoku();
 
 complexities.addEventListener('click', changeDifficulty);
-sudoku.addEventListener('click', highlight);
+sudoku.addEventListener('click', e => highlight(e.target.closest('.sudoku__item')));
+numbers.addEventListener('click', pickNum);
+erase.addEventListener('click', clearCell);
 
 function generateSudoku() {
     const difficulty = complexities.querySelector('.complexity__item.active').dataset.complexity;
-    let board = createEmptyBoard();
+    board = createEmptyBoard();
     solveSudoku(board);
     swap(board, 20);
     removeElems(board, DIFFICULTIES[difficulty].cells, DIFFICULTIES[difficulty].k);
@@ -56,8 +60,7 @@ function changeDifficulty(e) {
     }
 }
 
-function highlight(e) {
-    const cell = e.target.closest('.sudoku__item');
+function highlight(cell) {
     if (!cell) return;
 
     if (activeCell) activeCell.classList.remove('active');
@@ -77,4 +80,42 @@ function highlight(e) {
         .sudoku__item[data-row="${row}"], 
         .sudoku__item[data-col="${col}"]`)
             .forEach(item => item.classList.add('highlight'));
+}
+
+function pickNum(e) {
+    if (!e.target.classList.contains('numbers__item')) return;
+    if (!activeCell || !activeCell.classList.contains('edit')) return;
+
+    activeCell.classList.remove('wrong');
+
+    const num = e.target.dataset.number;
+
+    if (!isEditing) {
+        activeCell.dataset.num = num;
+        activeCell.textContent = num;
+
+        const [i, j] = [+activeCell.dataset.row, +activeCell.dataset.col];
+
+        let isValid = validateNum(board, num, [i, j]);
+
+        board[i][j] = num;
+
+        if (!isValid) {
+            activeCell.classList.add('wrong');
+
+            // получить ячейки, из-за которых невалидное значение и подсветить красным
+        }
+
+        highlight(activeCell);
+    }
+}
+
+function clearCell(e) {
+    if (!activeCell || !activeCell.classList.contains('edit')) return;
+
+    const [i, j] = [+activeCell.dataset.row, +activeCell.dataset.col];
+    board[i][j] = '.';
+    activeCell.dataset.num = '.';
+    activeCell.innerHTML = '';
+    highlight(activeCell);
 }
