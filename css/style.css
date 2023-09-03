@@ -1,19 +1,20 @@
 :root {
-    --border-color: rgba(62, 62, 62, 0.701);
-    --tip-color: rgb(91, 91, 91);
-    --number-color: #0072e3;
-    --active-color: blue;
-    --background-color: rgb(220, 236, 239);
-    --page-background-color: #fafafa;
-    --sudoku-color: #fff;
-    --active-cell-color: #9ecfff;
-    --item-wrong-color: red;
+    --page-background: #fafafa;
+    --sudoku-background: #fff;
+    --sudoku-border: rgba(62, 62, 62, 0.701);
+    --numbers-color: #0072e3;
+    --elem-active: blue;
+    --active-cell: #9ecfff;
+    --highlight-color: rgb(220, 236, 239);
+    --item-mistake: red;
+    --item-intersected: rgb(254, 219, 219);
+    --note-color: rgb(91, 91, 91);
 }
 
 html {
     font-size: 18px;
     font-family: 'Noto Sans', sans-serif;
-    background-color: var(--page-background-color);
+    background-color: var(--page-background);
 }
 
 .wrapper {
@@ -43,61 +44,65 @@ html {
 }
 
 .complexity__item.active {
-    color: var(--active-color);
+    color: var(--elem-active);
 }
 
 .sudoku {
     display: grid;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
     aspect-ratio: 1 / 1;
-    border: 1px solid var(--border-color);
-    background-color: var(--sudoku-color);
+    border: 1px solid var(--sudoku-border);
+    background-color: var(--sudoku-background);
 }
 
 .sudoku__square {
     display: grid;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-    border-top: 1px solid var(--border-color);
-    border-left: 1px solid var(--border-color);
+    border-top: 1px solid var(--sudoku-border);
+    border-left: 1px solid var(--sudoku-border);
 }
 
 .sudoku__item {
     display: grid;
     justify-content: center;
     align-content: center;
-    border-bottom: 1px solid var(--border-color);
-    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--sudoku-border);
+    border-right: 1px solid var(--sudoku-border);
 }
 
 .sudoku__item.highlight {
-    background-color: var(--background-color);
+    background-color: var(--highlight-color);
 }
 
 .sudoku__item.active {
-    background-color: var(--active-cell-color);
+    background-color: var(--active-cell);
 }
 
 .sudoku__item.edit {
-    color: var(--active-color);
+    color: var(--elem-active);
 }
 
 .sudoku__item.wrong {
-    color: var(--item-wrong-color);
+    color: var(--item-mistake);
+}
+
+.sudoku__item.intersected {
+    background-color: var(--item-intersected);
 }
 
 .sudoku__item:hover {
     cursor: default;
 }
 
-.sudoku__item_tip {
+.sudoku__item_note {
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
 }
 
-.sudoku__tip {
+.sudoku__note {
     justify-self: center;
     align-self: center;
     font-size: 0.4rem;
-    color: var(--tip-color);
+    color: var(--note-color);
 }
 
 .tools {
@@ -115,19 +120,19 @@ html {
 
 .tools__item:hover {
     cursor: pointer;
-    background-color: var(--background-color);
+    background-color: var(--highlight-color);
 }
 
 .tools__item.active {
-    color: var(--active-color);
+    color: var(--elem-active);
 }
 
 .tools__undo:active {
-    color: var(--active-color);
+    color: var(--elem-active);
 }
 
 .tools__erase:active {
-    color: var(--active-color);
+    color: var(--elem-active);
 }
 
 .numbers {
@@ -141,12 +146,12 @@ html {
     padding: 2px 7px;
     text-align: center;
     border-radius: 4px;
-    color: var(--number-color);
+    color: var(--numbers-color);
 }
 
 .numbers__item:hover {
     cursor: pointer;
-    background-color: var(--background-color);
+    background-color: var(--highlight-color);
 }
 
 @media (min-width: 340px) {

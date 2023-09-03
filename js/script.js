@@ -4,6 +4,7 @@ import {swap} from './swap.js';
 import {removeElems} from './removeElems.js';
 import {render} from './render.js';
 import {validateSudoku, validateNum} from './validate.js';
+import {getIntersectedCells} from './getIntersectedCells.js';
 // import {estimateComplexity} from './estimateComplexity.js';
 
 const DIFFICULTIES = {
@@ -67,15 +68,15 @@ function highlight(cell) {
     cell.classList.add('active');
     activeCell = cell;
 
-    document.querySelectorAll('.sudoku__item.highlight')
-        .forEach(item => item.classList.remove('highlight'));
+    sudoku.querySelectorAll('.sudoku__item.highlight, .sudoku__item.intersected')
+        .forEach(item => item.classList.remove('highlight', 'intersected'));
     
     const num = cell.dataset.num === '.' ? null : cell.dataset.num;
     const square = cell.dataset.square;
     const row = cell.dataset.row;
     const col = cell.dataset.col;
 
-    document.querySelectorAll(`.sudoku__item[data-num="${num}"], 
+    sudoku.querySelectorAll(`.sudoku__item[data-num="${num}"], 
         .sudoku__item[data-square="${square}"], 
         .sudoku__item[data-row="${row}"], 
         .sudoku__item[data-col="${col}"]`)
@@ -94,6 +95,8 @@ function pickNum(e) {
         activeCell.dataset.num = num;
         activeCell.textContent = num;
 
+        highlight(activeCell);
+
         const [i, j] = [+activeCell.dataset.row, +activeCell.dataset.col];
 
         let isValid = validateNum(board, num, [i, j]);
@@ -103,10 +106,12 @@ function pickNum(e) {
         if (!isValid) {
             activeCell.classList.add('wrong');
 
-            // получить ячейки, из-за которых невалидное значение и подсветить красным
+            getIntersectedCells(board, num, [i, j]).forEach(cords => {
+                const [i, j] = cords;
+                const cell = sudoku.querySelector(`[data-row="${i}"][data-col="${j}"]`);
+                cell.classList.add('intersected');
+            });
         }
-
-        highlight(activeCell);
     }
 }
 
