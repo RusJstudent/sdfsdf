@@ -6,6 +6,7 @@
     --background-color: rgb(220, 236, 239);
     --page-background-color: #fafafa;
     --sudoku-color: #fff;
+    --active-cell-color: #9ecfff;
 }
 
 html {
@@ -67,6 +68,14 @@ html {
     border-right: 1px solid var(--border-color);
 }
 
+.sudoku__item.highlight {
+    background-color: var(--background-color);
+}
+
+.sudoku__item.active {
+    background-color: var(--active-cell-color);
+}
+
 .sudoku__item.edit {
     color: var(--active-color);
 }
@@ -98,12 +107,21 @@ html {
     text-transform: uppercase;
 }
 
+
 .tools__item:hover {
     cursor: pointer;
     background-color: var(--background-color);
 }
 
 .tools__item.active {
+    color: var(--active-color);
+}
+
+.tools__undo:active {
+    color: var(--active-color);
+}
+
+.tools__erase:active {
     color: var(--active-color);
 }
 
