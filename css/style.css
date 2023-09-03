@@ -6,7 +6,7 @@
     --elem-active: blue;
     --active-cell: #9ecfff;
     --highlight-color: rgb(220, 236, 239);
-    --item-mistake: red;
+    --item-mistake: rgb(221, 0, 0);
     --item-intersected: rgb(254, 219, 219);
     --note-color: rgb(91, 91, 91);
 }
@@ -78,7 +78,7 @@ html {
     background-color: var(--active-cell);
 }
 
-.sudoku__item.edit {
+.sudoku__item.editable {
     color: var(--elem-active);
 }
 

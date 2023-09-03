@@ -17,7 +17,7 @@ function render(board, sudoku) {
                 cell.dataset.row = i;
                 cell.dataset.col = j;
                 cell.dataset.num = board[i][j];
-                board[i][j] === '.' ? cell.classList.add('edit') : cell.textContent = board[i][j];
+                board[i][j] === '.' ? cell.classList.add('editable') : cell.textContent = board[i][j];
                 square.append(cell);
             }
         }

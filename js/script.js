@@ -39,6 +39,7 @@ complexities.addEventListener('click', changeDifficulty);
 sudoku.addEventListener('click', e => highlight(e.target.closest('.sudoku__item')));
 numbers.addEventListener('click', pickNum);
 erase.addEventListener('click', clearCell);
+edit.addEventListener('click', editMode);
 
 function generateSudoku() {
     const difficulty = complexities.querySelector('.complexity__item.active').dataset.complexity;
@@ -85,7 +86,7 @@ function highlight(cell) {
 
 function pickNum(e) {
     if (!e.target.classList.contains('numbers__item')) return;
-    if (!activeCell || !activeCell.classList.contains('edit')) return;
+    if (!activeCell || !activeCell.classList.contains('editable')) return;
 
     activeCell.classList.remove('wrong');
 
@@ -112,15 +113,24 @@ function pickNum(e) {
                 cell.classList.add('intersected');
             });
         }
+    } else {
+        if (!activeCell.classList.contains('sudoku__item_note')) {
+            // createNote
+        }
     }
 }
 
 function clearCell(e) {
-    if (!activeCell || !activeCell.classList.contains('edit')) return;
+    if (!activeCell || !activeCell.classList.contains('editable')) return;
 
     const [i, j] = [+activeCell.dataset.row, +activeCell.dataset.col];
     board[i][j] = '.';
     activeCell.dataset.num = '.';
     activeCell.innerHTML = '';
     highlight(activeCell);
+}
+
+function editMode(e) {
+    isEditing = !isEditing;
+    edit.classList.toggle('active');
 }
