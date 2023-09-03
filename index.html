@@ -12,75 +12,12 @@
 <div class="wrapper">
     <h1>Sudoku game</h1>
     <div class="complexity">
-        <div class="complexity__item active">easy</div>
-        <div class="complexity__item">normal</div>
-        <div class="complexity__item">hard</div>
+        <div class="complexity__item active" data-complexity="easy">easy</div>
+        <div class="complexity__item" data-complexity="normal">normal</div>
+        <div class="complexity__item" data-complexity="hard">hard</div>
     </div>
     <div class="sudoku">
-        <div class="sudoku__square" data-square="1">
-            <div class="sudoku__item sudoku__item_tip" data-col="1">
-                <div class="sudoku__tip">1</div>
-                <div class="sudoku__tip">2</div>
-                <div class="sudoku__tip">3</div>
-                <div class="sudoku__tip">4</div>
-                <div class="sudoku__tip">5</div>
-                <div class="sudoku__tip">6</div>
-                <div class="sudoku__tip">7</div>
-                <div class="sudoku__tip">8</div>
-                <div class="sudoku__tip">9</div>
-            </div>
-            <div class="sudoku__item sudoku__item_tip">
-                <div class="sudoku__tip">1</div>
-                <div class="sudoku__tip">2</div>
-                <div class="sudoku__tip">3</div>
-                <div class="sudoku__tip">4</div>
-                <div class="sudoku__tip">5</div>
-                <div class="sudoku__tip">6</div>
-                <div class="sudoku__tip">7</div>
-                <div class="sudoku__tip">8</div>
-                <div class="sudoku__tip">9</div>
-            </div>
-            <div class="sudoku__item">3</div>
-            <div class="sudoku__item sudoku__item_tip">
-                <div class="sudoku__tip">1</div>
-                <div class="sudoku__tip">2</div>
-                <div class="sudoku__tip">3</div>
-                <div class="sudoku__tip">4</div>
-                <div class="sudoku__tip">5</div>
-                <div class="sudoku__tip">6</div>
-                <div class="sudoku__tip">7</div>
-                <div class="sudoku__tip">8</div>
-                <div class="sudoku__tip">9</div>
-            </div>
-            <div class="sudoku__item">5</div>
-            <div class="sudoku__item">6</div>
-            <div class="sudoku__item">7</div>
-            <div class="sudoku__item">8</div>
-            <div class="sudoku__item">9</div>
-        </div>
-        <div class="sudoku__square" data-square="2">
-            <div class="sudoku__item" data-col="1">1</div>
-            <div class="sudoku__item">2</div>
-            <div class="sudoku__item">3</div>
-            <div class="sudoku__item">4</div>
-            <div class="sudoku__item">5</div>
-            <div class="sudoku__item">6</div>
-            <div class="sudoku__item">7</div>
-            <div class="sudoku__item">8</div>
-            <div class="sudoku__item">9</div>
-        </div>
-        <div class="sudoku__square" data-square="3">
-            <div class="sudoku__item" data-col="1">1</div>
-            <div class="sudoku__item">2</div>
-            <div class="sudoku__item">3</div>
-            <div class="sudoku__item">4</div>
-            <div class="sudoku__item">5</div>
-            <div class="sudoku__item">6</div>
-            <div class="sudoku__item">7</div>
-            <div class="sudoku__item">8</div>
-            <div class="sudoku__item">9</div>
-        </div>
-        <div class="sudoku__square" data-square="4">
+        <!-- <div class="sudoku__square" data-square="1">
             <div class="sudoku__item sudoku__item_tip" data-col="1">
                 <div class="sudoku__tip">1</div>
                 <div class="sudoku__tip">2</div>
@@ -95,83 +32,28 @@
             <div class="sudoku__item">2</div>
             <div class="sudoku__item">3</div>
             <div class="sudoku__item">4</div>
-            <div class="sudoku__item">5</div>
+            <div class="sudoku__item edit">5</div>
             <div class="sudoku__item">6</div>
             <div class="sudoku__item">7</div>
             <div class="sudoku__item">8</div>
             <div class="sudoku__item">9</div>
-        </div>
-        <div class="sudoku__square" data-square="5">
-            <div class="sudoku__item" data-col="1">1</div>
-            <div class="sudoku__item">2</div>
-            <div class="sudoku__item">3</div>
-            <div class="sudoku__item">4</div>
-            <div class="sudoku__item">5</div>
-            <div class="sudoku__item">6</div>
-            <div class="sudoku__item">7</div>
-            <div class="sudoku__item">8</div>
-            <div class="sudoku__item">9</div>
-        </div>
-        <div class="sudoku__square" data-square="6">
-            <div class="sudoku__item" data-col="1">1</div>
-            <div class="sudoku__item">2</div>
-            <div class="sudoku__item">3</div>
-            <div class="sudoku__item">4</div>
-            <div class="sudoku__item">5</div>
-            <div class="sudoku__item">6</div>
-            <div class="sudoku__item">7</div>
-            <div class="sudoku__item">8</div>
-            <div class="sudoku__item">9</div>
-        </div>
-        <div class="sudoku__square" data-square="7">
-            <div class="sudoku__item" data-col="1">1</div>
-            <div class="sudoku__item">2</div>
-            <div class="sudoku__item">3</div>
-            <div class="sudoku__item">4</div>
-            <div class="sudoku__item">5</div>
-            <div class="sudoku__item">6</div>
-            <div class="sudoku__item">7</div>
-            <div class="sudoku__item">8</div>
-            <div class="sudoku__item">9</div>
-        </div>
-        <div class="sudoku__square" data-square="8">
-            <div class="sudoku__item" data-col="1">1</div>
-            <div class="sudoku__item">2</div>
-            <div class="sudoku__item">3</div>
-            <div class="sudoku__item">4</div>
-            <div class="sudoku__item">5</div>
-            <div class="sudoku__item">6</div>
-            <div class="sudoku__item">7</div>
-            <div class="sudoku__item">8</div>
-            <div class="sudoku__item">9</div>
-        </div>
-        <div class="sudoku__square" data-square="9">
-            <div class="sudoku__item" data-col="1">1</div>
-            <div class="sudoku__item">2</div>
-            <div class="sudoku__item">3</div>
-            <div class="sudoku__item">4</div>
-            <div class="sudoku__item">5</div>
-            <div class="sudoku__item">6</div>
-            <div class="sudoku__item">7</div>
-            <div class="sudoku__item">8</div>
-            <div class="sudoku__item">9</div>
-        </div>
+        </div> -->
     </div>
     <div class="tools">
-        <div class="tools__item">undo</div>
-        <div class="tools__item active">erase</div>
-        <div class="tools__item">edit</div>
+        <div class="tools__item tools__undo">undo</div>
+        <div class="tools__item tools__erase active">erase</div>
+        <div class="tools__item tools__edit">edit</div>
     </div>
     <div class="numbers">
-        <div class="numbers__item">1</div>
-        <div class="numbers__item">2</div>
-        <div class="numbers__item">3</div>
-        <div class="numbers__item">4</div>
-        <div class="numbers__item">5</div>
-        <div class="numbers__item">6</div>
-        <div class="numbers__item">7</div>
-        <div class="numbers__item">8</div>
-        <div class="numbers__item">9</div>
+        <div class="numbers__item" data-num="1">1</div>
+        <div class="numbers__item" data-num="2">2</div>
+        <div class="numbers__item" data-num="3">3</div>
+        <div class="numbers__item" data-num="4">4</div>
+        <div class="numbers__item" data-num="5">5</div>
+        <div class="numbers__item" data-num="6">6</div>
+        <div class="numbers__item" data-num="7">7</div>
+        <div class="numbers__item" data-num="8">8</div>
+        <div class="numbers__item" data-num="9">9</div>
     </div>
 </div>
 </body>

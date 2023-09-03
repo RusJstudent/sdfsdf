@@ -67,6 +67,10 @@ html {
     border-right: 1px solid var(--border-color);
 }
 
+.sudoku__item.edit {
+    color: var(--active-color);
+}
+
 .sudoku__item:hover {
     cursor: default;
 }

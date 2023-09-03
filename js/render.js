@@ -1,21 +1,23 @@
 export {render};
 
-function render(board, table) {
-    table.innerHTML = '';
-    const tBody = document.createElement('tbody');
-    table.append(tBody);
-    for (let i = 0; i < 9; i++) {
-        const row = document.createElement('tr');
-        tBody.append(row);
-        for (let j = 0; j < 9; j++) {
-            const cell = document.createElement('td');
-            cell.classList.add('cell');
-            row.append(cell);
-            if (board[i][j] === '.') {
-                cell.setAttribute('contenteditable', true);
-                cell.classList.add('edit');
-            } else {
-                cell.textContent = board[i][j];
+function render(board, sudoku) {
+    sudoku.innerHTML = '';
+    for (let k = 0; k < 9; k++) {
+        const square = document.createElement('div');
+        square.classList.add('sudoku__square');
+        sudoku.append(square);
+
+        const startRow = Math.floor(k / 3) * 3;
+        const startCol = k * 3 % 9;
+        for (let i = startRow; i < startRow + 3; i++) {
+            for (let j = startCol; j < startCol + 3; j++) {
+                const cell = document.createElement('div');
+                cell.classList.add('sudoku__item');
+                cell.dataset.square = k;
+                cell.dataset.row = i;
+                cell.dataset.col = j;
+                board[i][j] === '.' ? cell.classList.add('edit') : cell.textContent = board[i][j];
+                square.append(cell);
             }
         }
     }
