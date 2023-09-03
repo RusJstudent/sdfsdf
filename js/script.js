@@ -93,6 +93,10 @@ function pickNum(e) {
     const num = e.target.dataset.number;
 
     if (!isEditing) {
+        if (activeCell.classList.contains('sudoku__item_note')) {
+            activeCell.classList.remove('sudoku__item_note');
+        }
+
         activeCell.dataset.num = num;
         activeCell.textContent = num;
 
@@ -100,22 +104,33 @@ function pickNum(e) {
 
         const [i, j] = [+activeCell.dataset.row, +activeCell.dataset.col];
 
-        let isValid = validateNum(board, num, [i, j]);
-
         board[i][j] = num;
 
-        if (!isValid) {
-            activeCell.classList.add('wrong');
+        let isValid = validateNum(board, num, [i, j]);
+        if (isValid) return;
 
-            getIntersectedCells(board, num, [i, j]).forEach(cords => {
-                const [i, j] = cords;
-                const cell = sudoku.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-                cell.classList.add('intersected');
-            });
-        }
+        activeCell.classList.add('wrong');
+
+        getIntersectedCells(board, num, [i, j]).forEach(cords => {
+            const [i, j] = cords;
+            const cell = sudoku.querySelector(`[data-row="${i}"][data-col="${j}"]`);
+            cell.classList.add('intersected');
+        });
     } else {
-        if (!activeCell.classList.contains('sudoku__item_note')) {
-            // createNote
+        if (activeCell.classList.contains('sudoku__item_note')) {
+            const note = activeCell.children[num - 1];
+            note.textContent = note.textContent === '' ? num : '';
+            return;
+        }
+
+        activeCell.innerHTML = '';
+        activeCell.classList.add('sudoku__item_note');
+
+        for (let i = 0; i < 9; i++) {
+            const note = document.createElement('div');
+            note.classList.add('sudoku__note');
+            if (+num === i + 1) note.textContent = num;
+            activeCell.append(note);
         }
     }
 }
@@ -123,6 +138,7 @@ function pickNum(e) {
 function clearCell(e) {
     if (!activeCell || !activeCell.classList.contains('editable')) return;
 
+    activeCell.classList.remove('sudoku__item_note');
     const [i, j] = [+activeCell.dataset.row, +activeCell.dataset.col];
     board[i][j] = '.';
     activeCell.dataset.num = '.';
