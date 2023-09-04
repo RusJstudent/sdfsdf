@@ -50,9 +50,15 @@ if (difficulty) { // reading storage data
     generateSudoku();
 }
 
+document.addEventListener('keydown', function(e) {
+    if (!e.code.startsWith('Digit') || e.repeat || e.code[5] === '0') return;
+    
+    pickNum(e.code[5]);
+});
+
 complexities.addEventListener('click', changeDifficulty);
 sudoku.addEventListener('click', e => highlight(e.target.closest('.sudoku__item')));
-numbers.addEventListener('click', pickNum);
+numbers.addEventListener('click', e => e.target.classList.contains('numbers__item') && pickNum(e.target.dataset.number));
 erase.addEventListener('click', e => activeCell && activeCell.classList.contains('editable') && clearCell(activeCell));
 edit.addEventListener('click', editMode);
 
@@ -65,6 +71,7 @@ function generateSudoku() {
     board = createEmptyBoard();
     solveSudoku(board);
     swap(board, 20);
+    console.log(JSON.parse(JSON.stringify(board)));
     removeElems(board, DIFFICULTIES[difficulty].cells, DIFFICULTIES[difficulty].k);
     render(board, sudoku);
 
@@ -135,17 +142,17 @@ function highlight(cell) {
             .forEach(item => item.classList.add('highlight'));
 }
 
-function pickNum(e) {
-    if (!e.target.classList.contains('numbers__item')) return;
+function pickNum(num) {
     if (!activeCell || !activeCell.classList.contains('editable')) return;
 
     activeCell.classList.remove('wrong');
 
-    const num = e.target.dataset.number;
-
     if (!isEditing) {
         if (activeCell.classList.contains('sudoku__item_note')) {
             activeCell.classList.remove('sudoku__item_note');
+        } else if (activeCell.textContent === num) {
+            clearCell(activeCell);
+            return;
         }
 
         activeCell.dataset.num = num;
