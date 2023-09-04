@@ -6,7 +6,7 @@ import {render} from './render.js';
 import {validateNum} from './validateNum.js';
 import {getIntersectedCells} from './getIntersectedCells.js';
 import {isSolved} from './isSolved.js';
-// import {estimateComplexity} from './estimateComplexity.js';
+import {getCurrentBoard} from './getCurrentBoard.js';
 
 const DIFFICULTIES = {
     easy: {
@@ -35,11 +35,20 @@ const numbers = document.querySelector('.numbers');
 let board;
 let activeCell = null;
 let isEditing = false;
-let difficulty;
 let counter;
 let timerId;
+let difficulty = localStorage.getItem('difficulty');
 
-generateSudoku();
+if (difficulty) { // reading storage data
+    mistakesCounter.textContent = counter = +localStorage.getItem('mistakes');
+    timerHandler(localStorage.getItem('seconds'));
+    complexities.querySelector(`[data-complexity="${difficulty}"]`).classList.add('active');
+    board = JSON.parse(localStorage.getItem('initialBoard'));
+    render(board, sudoku);
+    getCurrentBoard(sudoku, board, validateNum);
+} else {
+    generateSudoku();
+}
 
 complexities.addEventListener('click', changeDifficulty);
 sudoku.addEventListener('click', e => highlight(e.target.closest('.sudoku__item')));
@@ -50,21 +59,28 @@ edit.addEventListener('click', editMode);
 function generateSudoku() {
     mistakesCounter.textContent = counter = 0;
     timerHandler();
-    difficulty = complexities.querySelector('.complexity__item.active').dataset.complexity;
+    if (!difficulty) difficulty = 'easy';
+    complexities.querySelector(`[data-complexity="${difficulty}"]`).classList.add('active');
+
     board = createEmptyBoard();
     solveSudoku(board);
     swap(board, 20);
     removeElems(board, DIFFICULTIES[difficulty].cells, DIFFICULTIES[difficulty].k);
     render(board, sudoku);
+
+    localStorage.setItem('mistakes', 0);
+    localStorage.setItem('difficulty', difficulty); 
+    localStorage.setItem('initialBoard', JSON.stringify(board));
+    localStorage.setItem('currentBoard', JSON.stringify(board));
 }
 
-function timerHandler() {
+function timerHandler(secondsPlaying = 0) {
     clearInterval(timerId);
-    let secondsPlaying = 0;
     timer.textContent = format(secondsPlaying);
     timerId = setInterval(() => {
         secondsPlaying++;
         timer.textContent = format(secondsPlaying);
+        localStorage.setItem('seconds', secondsPlaying);
     }, 1000);
 
     function format(seconds) {
@@ -91,8 +107,8 @@ function changeDifficulty(e) {
     const restart = confirm(`Start new game on level ${e.target.dataset.complexity}?`);
 
     if (restart) {
+        difficulty = e.target.dataset.complexity;
         complexities.querySelector('.complexity__item.active').classList.remove('active');
-        e.target.classList.add('active');
         generateSudoku();
     }
 }
@@ -140,6 +156,7 @@ function pickNum(e) {
         const [i, j] = [+activeCell.dataset.row, +activeCell.dataset.col];
 
         board[i][j] = num;
+        localStorage.setItem('currentBoard', JSON.stringify(board));
 
         let isValid = validateNum(board, num, [i, j]);
         if (isValid) {
@@ -151,6 +168,7 @@ function pickNum(e) {
 
         counter++;
         mistakesCounter.textContent = counter;
+        localStorage.setItem('mistakes', counter);
         activeCell.classList.add('wrong');
 
         getIntersectedCells(board, num, [i, j]).forEach(cords => {
@@ -181,6 +199,7 @@ function clearCell(activeCell) {
     activeCell.classList.remove('sudoku__item_note');
     const [i, j] = [+activeCell.dataset.row, +activeCell.dataset.col];
     board[i][j] = '.';
+    localStorage.setItem('currentBoard', JSON.stringify(board));
     activeCell.dataset.num = '.';
     activeCell.innerHTML = '';
     highlight(activeCell);
