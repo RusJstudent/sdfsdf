@@ -37,6 +37,7 @@ let activeCell = null;
 let isEditing = false;
 let difficulty;
 let counter;
+let timerId;
 
 generateSudoku();
 
@@ -47,14 +48,41 @@ erase.addEventListener('click', e => activeCell && activeCell.classList.contains
 edit.addEventListener('click', editMode);
 
 function generateSudoku() {
-    counter = 0;
-    mistakesCounter.textContent = counter;
+    mistakesCounter.textContent = counter = 0;
+    timerHandler();
     difficulty = complexities.querySelector('.complexity__item.active').dataset.complexity;
     board = createEmptyBoard();
     solveSudoku(board);
     swap(board, 20);
     removeElems(board, DIFFICULTIES[difficulty].cells, DIFFICULTIES[difficulty].k);
     render(board, sudoku);
+}
+
+function timerHandler() {
+    clearInterval(timerId);
+    let secondsPlaying = 0;
+    timer.textContent = format(secondsPlaying);
+    timerId = setInterval(() => {
+        secondsPlaying++;
+        timer.textContent = format(secondsPlaying);
+    }, 1000);
+
+    function format(seconds) {
+        let str = '';
+        let sec = seconds % 60;
+        seconds -= sec;
+        let min = seconds % 3600 / 60;
+        seconds -= min * 60;
+    
+        if (seconds) {
+            let hours = seconds / 3600;
+            str += `${hours}:${min}:${sec}`;
+        } else {
+            str += `${min}:${sec}`;
+        }
+    
+        return str.replace(/\b\d\b/g, '0$&');
+    }
 }
 
 function changeDifficulty(e) {
