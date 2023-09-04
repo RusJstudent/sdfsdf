@@ -38,7 +38,7 @@ generateSudoku();
 complexities.addEventListener('click', changeDifficulty);
 sudoku.addEventListener('click', e => highlight(e.target.closest('.sudoku__item')));
 numbers.addEventListener('click', pickNum);
-erase.addEventListener('click', clearCell);
+erase.addEventListener('click', e => activeCell && activeCell.classList.contains('editable') && clearCell(activeCell));
 edit.addEventListener('click', editMode);
 
 function generateSudoku() {
@@ -123,7 +123,7 @@ function pickNum(e) {
             return;
         }
 
-        activeCell.innerHTML = '';
+        clearCell(activeCell);
         activeCell.classList.add('sudoku__item_note');
 
         for (let i = 0; i < 9; i++) {
@@ -135,9 +135,7 @@ function pickNum(e) {
     }
 }
 
-function clearCell(e) {
-    if (!activeCell || !activeCell.classList.contains('editable')) return;
-
+function clearCell(activeCell) {
     activeCell.classList.remove('sudoku__item_note');
     const [i, j] = [+activeCell.dataset.row, +activeCell.dataset.col];
     board[i][j] = '.';

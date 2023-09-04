@@ -112,11 +112,10 @@ html {
 }
 
 .tools__item {
-    padding: 2px 5px 2px 5px;
+    padding: 2px 5px;
     border-radius: 4px;
     text-transform: uppercase;
 }
-
 
 .tools__item:hover {
     cursor: pointer;
