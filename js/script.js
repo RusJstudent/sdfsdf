@@ -46,6 +46,10 @@ if (difficulty) { // reading storage data
     board = JSON.parse(localStorage.getItem('initialBoard'));
     render(board, sudoku);
     getCurrentBoard(sudoku, board, validateNum);
+    if (isSolved(board)) {
+        setTimeout(() => alert(`Congrats! Level ${difficulty} sudoku is solved!`));
+        clearInterval(timerId);
+    }
 } else {
     generateSudoku();
 }
@@ -71,7 +75,6 @@ function generateSudoku() {
     board = createEmptyBoard();
     solveSudoku(board);
     swap(board, 20);
-    console.log(JSON.parse(JSON.stringify(board)));
     removeElems(board, DIFFICULTIES[difficulty].cells, DIFFICULTIES[difficulty].k);
     render(board, sudoku);
 
@@ -168,7 +171,8 @@ function pickNum(num) {
         let isValid = validateNum(board, num, [i, j]);
         if (isValid) {
             if (isSolved(board)) {
-                setTimeout(() => alert(`Congrats! Sudoku level ${difficulty} is finished!`));
+                setTimeout(() => alert(`Congrats! Level ${difficulty} sudoku is solved!`));
+                clearInterval(timerId);
             }
             return;
         }
