@@ -10,6 +10,7 @@ function getCurrentBoard(sudoku, initialBoard, validateNum) {
             initialBoard[i][j] = num;
             const cell = sudoku.querySelector(`[data-row="${i}"][data-col="${j}"]`);
             cell.textContent = num;
+            cell.dataset.num = num;
 
             const isValid = validateNum(currentBoard, num, [i, j]);          
             if (!isValid) {
