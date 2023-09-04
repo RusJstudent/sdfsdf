@@ -25,13 +25,17 @@ html {
 }
 
 .wrapper > *:not(:last-child) {
-    margin: 0px 0px 20px 0px;
+    margin: 0px 0px 12px 0px;
+}
+
+.wrapper h1 {
+    font-size: 1.5rem;
 }
 
 .complexity {
     display: flex;
     justify-content: space-around;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .complexity__item {
@@ -45,6 +49,17 @@ html {
 
 .complexity__item.active {
     color: var(--elem-active);
+}
+
+.info {
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.7rem;
+}
+
+.info__item {
+    width: 100%;
+    text-align: center;
 }
 
 .sudoku {
@@ -112,7 +127,7 @@ html {
 }
 
 .tools__item {
-    padding: 2px 5px;
+    padding: 0 5px;
     border-radius: 4px;
     text-transform: uppercase;
 }
@@ -142,7 +157,7 @@ html {
 
 .numbers__item {
     width: 100%;
-    padding: 2px 7px;
+    padding: 0 7px;
     text-align: center;
     border-radius: 4px;
     color: var(--numbers-color);

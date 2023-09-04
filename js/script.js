@@ -14,17 +14,19 @@ const DIFFICULTIES = {
         k: 3,
     },
     normal: {
-        cells: 27,
+        cells: 30,
         k: 2,
     },
     hard: {
-        cells: 20,
+        cells: 22,
         k: 1,
     },
 }
 
 const complexities = document.querySelector('.complexity');
 const sudoku = document.querySelector('.sudoku');
+const mistakesCounter = document.querySelector('.info__counter');
+const timer = document.querySelector('.info__timer');
 const undo = document.querySelector('.tools__undo');
 const erase = document.querySelector('.tools__erase');
 const edit = document.querySelector('.tools__edit');
@@ -34,6 +36,7 @@ let board;
 let activeCell = null;
 let isEditing = false;
 let difficulty;
+let counter;
 
 generateSudoku();
 
@@ -44,6 +47,8 @@ erase.addEventListener('click', e => activeCell && activeCell.classList.contains
 edit.addEventListener('click', editMode);
 
 function generateSudoku() {
+    counter = 0;
+    mistakesCounter.textContent = counter;
     difficulty = complexities.querySelector('.complexity__item.active').dataset.complexity;
     board = createEmptyBoard();
     solveSudoku(board);
@@ -116,6 +121,8 @@ function pickNum(e) {
             return;
         }
 
+        counter++;
+        mistakesCounter.textContent = counter;
         activeCell.classList.add('wrong');
 
         getIntersectedCells(board, num, [i, j]).forEach(cords => {
