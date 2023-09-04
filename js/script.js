@@ -7,6 +7,7 @@ import {validateNum} from './validateNum.js';
 import {getIntersectedCells} from './getIntersectedCells.js';
 import {isSolved} from './isSolved.js';
 import {getCurrentBoard} from './getCurrentBoard.js';
+import {cancel} from './cancel.js';
 
 const DIFFICULTIES = {
     easy: {
@@ -31,6 +32,7 @@ const undo = document.querySelector('.tools__undo');
 const erase = document.querySelector('.tools__erase');
 const edit = document.querySelector('.tools__edit');
 const numbers = document.querySelector('.numbers');
+const stack = [];
 
 let board;
 let activeCell = null;
@@ -65,6 +67,7 @@ sudoku.addEventListener('click', e => highlight(e.target.closest('.sudoku__item'
 numbers.addEventListener('click', e => e.target.classList.contains('numbers__item') && pickNum(e.target.dataset.number));
 erase.addEventListener('click', e => activeCell && activeCell.classList.contains('editable') && clearCell(activeCell));
 edit.addEventListener('click', editMode);
+undo.addEventListener('click', e => cancel(sudoku, stack, board, validateNum, highlight));
 
 function generateSudoku() {
     mistakesCounter.textContent = counter = 0;
@@ -157,6 +160,7 @@ function pickNum(num) {
             clearCell(activeCell);
             return;
         }
+        stack.push(JSON.parse(JSON.stringify(board)));
 
         activeCell.dataset.num = num;
         activeCell.textContent = num;
@@ -207,6 +211,7 @@ function pickNum(num) {
 }
 
 function clearCell(activeCell) {
+    const savedBoard = JSON.parse(JSON.stringify(board));
     activeCell.classList.remove('sudoku__item_note');
     const [i, j] = [+activeCell.dataset.row, +activeCell.dataset.col];
     board[i][j] = '.';
@@ -214,9 +219,20 @@ function clearCell(activeCell) {
     activeCell.dataset.num = '.';
     activeCell.innerHTML = '';
     highlight(activeCell);
+    if (!isEqual(board, savedBoard)) stack.push(savedBoard);
 }
 
 function editMode(e) {
     isEditing = !isEditing;
     edit.classList.toggle('active');
+}
+
+function isEqual(board1, board2) {
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            if (board1[i][j] !== board2[i][j]) return false;
+        }
+    }
+
+    return true;
 }
