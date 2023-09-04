@@ -3,8 +3,9 @@ import {solveSudoku} from './solveSudoku.js';
 import {swap} from './swap.js';
 import {removeElems} from './removeElems.js';
 import {render} from './render.js';
-import {validateSudoku, validateNum} from './validate.js';
+import {validateNum} from './validateNum.js';
 import {getIntersectedCells} from './getIntersectedCells.js';
+import {isSolved} from './isSolved.js';
 // import {estimateComplexity} from './estimateComplexity.js';
 
 const DIFFICULTIES = {
@@ -32,6 +33,7 @@ const numbers = document.querySelector('.numbers');
 let board;
 let activeCell = null;
 let isEditing = false;
+let difficulty;
 
 generateSudoku();
 
@@ -42,7 +44,7 @@ erase.addEventListener('click', e => activeCell && activeCell.classList.contains
 edit.addEventListener('click', editMode);
 
 function generateSudoku() {
-    const difficulty = complexities.querySelector('.complexity__item.active').dataset.complexity;
+    difficulty = complexities.querySelector('.complexity__item.active').dataset.complexity;
     board = createEmptyBoard();
     solveSudoku(board);
     swap(board, 20);
@@ -107,7 +109,12 @@ function pickNum(e) {
         board[i][j] = num;
 
         let isValid = validateNum(board, num, [i, j]);
-        if (isValid) return;
+        if (isValid) {
+            if (isSolved(board)) {
+                setTimeout(() => alert(`Congrats! Sudoku level ${difficulty} is finished!`));
+            }
+            return;
+        }
 
         activeCell.classList.add('wrong');
 
