@@ -120,6 +120,7 @@ function changeDifficulty(e) {
     const restart = confirm(`Start new game on level ${e.target.dataset.complexity}?`);
 
     if (restart) {
+        activeCell = null;
         stack.length = 0;
         difficulty = e.target.dataset.complexity;
         complexities.querySelector('.complexity__item.active').classList.remove('active');
